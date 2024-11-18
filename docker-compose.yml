@@ -1,0 +1,28 @@
+services:
+  auth-db:
+    image: mariadb:latest
+    container_name: auth-db
+    env_file:
+      - ./databases/auth/.env
+    volumes:
+      - auth_data:/var/lib/mysql
+      - ./databases/auth/sql/:/docker-entrypoint-initdb.d/
+    ports:
+      - "3306:3306"
+    networks:
+      - shrp
+
+  adminer:
+    image: adminer
+    container_name: adminer
+    env_file:
+      - ./databases/adminer/.env
+    ports:
+      - 8080:8080
+    networks:
+      - shrp
+volumes:
+  auth_data:
+networks:
+  shrp:
+    driver: bridge
