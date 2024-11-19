@@ -21,8 +21,21 @@ services:
       - 8080:8080
     networks:
       - shrp
+
+  bet-db:
+    image: mariadb:latest
+    container_name: bet-db
+    env_file:
+      - ./databases/bet/.env
+    volumes:
+      - bet_data:/var/lib/mysql
+    ports:
+      - "3307:3307"
+    networks:
+      - shrp
 volumes:
   auth_data:
+  bet_data:
 networks:
   shrp:
     driver: bridge
