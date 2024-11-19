@@ -1,10 +1,17 @@
 package dto;
 
-import enumeration.BetType;
+import lombok.Data;
 
+import java.util.Date;
+
+@Data
 public class BetDto {
 
-    private Long matchId;
-    private Long userId;
-    private BetType betType;
+    private int matchId;
+    private int userId;
+    private String betType;
+    private double odds;
+    private Date deadline;
+    private double bet;
+
 }
