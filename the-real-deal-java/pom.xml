@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>clean.architecture</groupId>
-	<artifactId>the-real-deal-bet</artifactId>
+	<artifactId>the-real-deal-java</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>the-real-deal-bet</name>
 	<description>Demo project for Spring Boot</description>
