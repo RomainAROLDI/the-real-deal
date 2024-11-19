@@ -1,5 +1,5 @@
-import {Injectable, NotFoundException} from '@nestjs/common';
-import {Repository} from 'typeorm';
+import {ConflictException, Injectable, NotFoundException} from '@nestjs/common';
+import {QueryFailedError, Repository} from 'typeorm';
 import {InjectRepository} from "@nestjs/typeorm";
 import {Bet} from '../entities/bet.entity';
 import {CreateBetDto} from '../dto/create-bet.dto';
@@ -14,12 +14,21 @@ export class BetService {
     }
 
     async create(createBetDto: CreateBetDto): Promise<Bet> {
-        const bet = this.betRepository.create(createBetDto);
-        return this.betRepository.save(bet);
+        try {
+            const newBet = this.betRepository.create(createBetDto);
+            return await this.betRepository.save(newBet);
+        } catch (error) {
+            if (error instanceof QueryFailedError && error.driverError.code === 'ER_DUP_ENTRY') {
+                throw new ConflictException(
+                    'A bet with the same matchId and choice already exists.',
+                );
+            }
+            throw error;
+        }
     }
 
     async findAll(): Promise<Bet[]> {
-        return this.betRepository.find();
+        return await this.betRepository.find();
     }
 
     async findOne(id: number): Promise<Bet> {
@@ -33,15 +42,15 @@ export class BetService {
     async update(id: number, updateBetDto: UpdateBetDto): Promise<Bet> {
         const bet = await this.findOne(id);
         Object.assign(bet, updateBetDto);
-        return this.betRepository.save(bet);
+        return await this.betRepository.save(bet);
     }
 
-    async softDelete(id: number): Promise<void> {
+    async softDelete(id: number): Promise<Bet> {
         const bet = await this.findOne(id);
         if (!bet) {
             throw new NotFoundException(`Bet with ID ${id} not found`);
         }
-        await this.betRepository.softRemove(bet);
+        return await this.betRepository.softRemove(bet);
     }
 
     async restore(id: number): Promise<Bet> {
@@ -50,6 +59,6 @@ export class BetService {
             throw new NotFoundException(`Bet with ID ${id} not found`);
         }
         bet.deletedAt = null;
-        return this.betRepository.save(bet);
+        return await this.betRepository.save(bet);
     }
 }

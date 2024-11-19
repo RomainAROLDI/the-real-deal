@@ -1,4 +1,12 @@
-import {Entity, Column, PrimaryGeneratedColumn, DeleteDateColumn, CreateDateColumn, UpdateDateColumn} from 'typeorm';
+import {
+    Entity,
+    Column,
+    PrimaryGeneratedColumn,
+    DeleteDateColumn,
+    CreateDateColumn,
+    UpdateDateColumn,
+    Unique
+} from 'typeorm';
 
 export enum BetStatus {
     PENDING = 'PENDING',
@@ -14,6 +22,7 @@ export enum BetChoice {
 }
 
 @Entity('bets')
+@Unique(['matchId', 'choice'])
 export class Bet {
     @PrimaryGeneratedColumn('increment')
     id: number;
