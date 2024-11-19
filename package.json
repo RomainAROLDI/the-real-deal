@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "dev:auth": "bun run --hot ./services/auth/src/index.ts"
+  }
+}
