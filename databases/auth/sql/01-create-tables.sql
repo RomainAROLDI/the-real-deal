@@ -14,6 +14,7 @@ CREATE TABLE `user` (
     `lastSignInAt` datetime DEFAULT NULL,
     `createdAt` datetime NOT NULL,
     `updatedAt` datetime DEFAULT NULL ON UPDATE current_timestamp(),
+    `deletedAt` datetime DEFAULT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `email` (`email`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_uca1400_ai_ci;
