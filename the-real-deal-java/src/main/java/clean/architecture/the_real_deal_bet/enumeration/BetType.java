@@ -1,4 +1,4 @@
-package enumeration;
+package clean.architecture.the_real_deal_bet.enumeration;
 
 import lombok.AllArgsConstructor;
 

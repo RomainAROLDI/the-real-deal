@@ -1,17 +1,19 @@
-package entity;
+package clean.architecture.the_real_deal_bet.entity;
 
-import dto.BetDto;
-import enumeration.BetType;
+import clean.architecture.the_real_deal_bet.enumeration.BetType;
+import clean.architecture.the_real_deal_bet.enumeration.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
 @Entity
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Deal {
@@ -22,12 +24,13 @@ public class Deal {
 
     private double gains;
 
-    private Date creation;
+    private LocalDateTime creation;
 
     private BetType betType;
 
-    @OneToMany(mappedBy = "deal")
-    private List<BetDto> betDtoList;
+    private List<Integer> betDtoList;
+
+    private Status status;
 
 }
 
