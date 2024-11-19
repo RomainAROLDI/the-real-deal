@@ -38,6 +38,9 @@ export class BetService {
 
     async softDelete(id: number): Promise<void> {
         const bet = await this.findOne(id);
+        if (!bet) {
+            throw new NotFoundException(`Bet with ID ${id} not found`);
+        }
         await this.betRepository.softRemove(bet);
     }
 
