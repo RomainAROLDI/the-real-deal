@@ -1,4 +1,17 @@
 services:
+  api-gateway:
+    image: api-gateway
+    container_name: api-gateway
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    env_file:
+      - ./api-gateway/.env
+    ports:
+      - 3333:3333
+    networks:
+      - shrp
+  
   auth-db:
     image: mariadb:latest
     container_name: auth-db
